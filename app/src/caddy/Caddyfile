@@ -1,0 +1,6 @@
+
+  :8080 {
+      root * C:\Users\Henri\Videos\selfhostly\app\projects\out
+      file_server
+      try_files {path} /index.html
+  }
