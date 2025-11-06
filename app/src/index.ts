@@ -1,7 +1,7 @@
-import { Elysia } from "elysia";
+import { Elysia } from "elysia"
 import { uploadRoutes } from "./routes/upload";
 import { projectRoutes } from "./routes/projects";
-
-const app = new Elysia().use(uploadRoutes).use(projectRoutes).listen(3000);
+import cors from "@elysiajs/cors";
+const app = new Elysia().use(uploadRoutes).use(cors()).use(projectRoutes).listen(3000);
 
 
