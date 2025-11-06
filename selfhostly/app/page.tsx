@@ -6,30 +6,11 @@ import { useState, useRef } from "react";
 import { Upload, Check, AlertCircle, Zap, Shield, Globe } from "lucide-react";
 
 export default function Home() {
-  const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [deploymentUrl, setDeploymentUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFile(files[0]);
-    }
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.currentTarget.files;
@@ -152,40 +133,26 @@ export default function Home() {
               </div>
             ) : (
               <>
-                <div
-                  onDragOver={handleDragOver}
-                  onDragLeave={handleDragLeave}
-                  onDrop={handleDrop}
-                  onClick={() => fileInputRef.current?.click()}
-                  className={`border-2 rounded-lg p-12 cursor-pointer transition-all ${
-                    isDragging
-                      ? "border-emerald-500 bg-emerald-950/10"
-                      : "border-dashed border-zinc-700 hover:border-zinc-600 bg-zinc-900/30"
-                  }`}
-                >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".zip"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  <div className="space-y-3 text-center">
-                    <div className="flex justify-center">
-                      <Upload className="w-10 h-10 text-zinc-500" />
-                    </div>
-                    <div>
-                      <p className="text-lg font-medium text-zinc-50">
-                        Drop your ZIP file here
-                      </p>
-                      <p className="text-sm text-zinc-400">
-                        or click to browse
-                      </p>
-                    </div>
-                    <p className="text-xs text-zinc-500">
-                      Maximum file size: 5MB
-                    </p>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".zip"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                <div className="space-y-3 text-center">
+                  <div className="flex justify-center">
+                    <Upload className="w-10 h-10 text-zinc-500" />
                   </div>
+                  <div>
+                    <p className="text-lg font-medium text-zinc-50">
+                      Drop your ZIP file here
+                    </p>
+                    <p className="text-sm text-zinc-400">or click to browse</p>
+                  </div>
+                  <p className="text-xs text-zinc-500">
+                    Maximum file size: 5MB
+                  </p>
                 </div>
 
                 {error && (
